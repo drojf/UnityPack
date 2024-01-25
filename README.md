@@ -3,6 +3,10 @@
 
 A library to deserialize Unity3D Assets and AssetBundles files (*.unity3d).
 
+## Fork Information
+
+- This fork is **meant to be used for 07th-mod project** only, I wouldn't use this for other projects.
+
 ## Dependencies
 
 * [python-lz4](https://github.com/python-lz4/python-lz4) (For UnityFS-compressed files)

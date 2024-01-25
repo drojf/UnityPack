@@ -18,8 +18,9 @@ LIBRARY_UNITY_DEFAULT_RESOURCES = "library/unity default resources"
 
 class Asset:
 	@classmethod
-	def from_bundle(cls, bundle, buf):
+	def from_bundle(cls, bundle, buf, legacy_mode):
 		ret = cls()
+		ret.legacy_mode = legacy_mode
 		ret.bundle = bundle
 		ret.environment = bundle.environment
 		offset = buf.tell()
@@ -52,8 +53,9 @@ class Asset:
 		return ret
 
 	@classmethod
-	def from_file(cls, file, environment=None):
+	def from_file(cls, file, legacy_mode, environment=None):
 		ret = cls()
+		ret.legacy_mode = legacy_mode
 		ret.name = file.name
 		ret._buf_ofs = file.tell()
 		ret._buf = BinaryReader(file)
@@ -78,6 +80,7 @@ class Asset:
 			return None
 
 	def __init__(self):
+		self.legacy_mode = False
 		self._buf_ofs = None
 		self._objects = {}
 		self.adds = []

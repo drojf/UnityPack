@@ -151,9 +151,16 @@ class TypeMetadata:
 					tree.load(buf)
 					self.type_trees[class_id] = tree
 
-				# 4 unidentified bytes at the end of a type tree in 2019.4
-				if format >= 21:
-					unk1 = buf.read(4)
+				# I had an issue with only one asset being detected when trying to open a 2019.4.36f1 file
+				# because this would skip over the 'num_objects' field, resulting in num_objects being set to '1'
+				#
+				# I'm not sure how to fix this properly, so I've just added an option to disable it
+				# (perhaps you could copy how UABE does it? since UABE seems to work fine with the same file)
+				if not self.asset.legacy_mode:
+					# The below code change was added in https://github.com/HearthSim/UnityPack/pull/101
+					# 4 unidentified bytes at the end of a type tree in 2019.4
+					if format >= 21:
+						unk1 = buf.read(4)
 
 		else:
 			num_fields = buf.read_int()
